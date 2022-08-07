@@ -32,10 +32,16 @@ public class InsertUpdate<K, V> extends LinkedHashMap<K, V> {
     public InsertUpdate(int maxSize) {
         //Defining the "initialCapacity" as maxSize+2 and the "loadFactor" as 1f
         //means the HashMap will never have its capacity increased.
+        //Check the removeEldestEntry method escription for more details.
         super(maxSize+2, 1f);
         this.maxSize = maxSize;
     }
 
+    /**
+     * The removeEldestEntry method is used keep a track of whether the map removes any eldest entry from the map.
+     * @param eldest
+     * @return returns true if this map should remove its eldest entry.
+     */
     @Override
     protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
         return size() > maxSize;
