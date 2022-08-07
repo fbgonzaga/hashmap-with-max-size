@@ -1,4 +1,4 @@
-package com.hashmap.maxsize;
+package com.hashmap.maxsized;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -17,32 +17,22 @@ import java.util.Map;
 // Element 5 is the most recent.
 //
 // IMPORTANT:
-// All the operations (GET, UPDATE, PUT) over an element will move it to the tail of the queue.
+// The operations UPDATE and PUT over an element will move it to the tail of the queue.
+// Accessing an element (GET method) does not change its position inside the HashMap.
 //
-// Accessing an element (get method) will move it to the tail of the queue.
 // Replacing an element will move it to the tail of the queue.
 //    -> replacing operation can be performed by explicitly calling the replace method or
 //    -> by calling the put method passing an existing key as a param.
 // Putting an element will move it to the tail of the queue.
 
-public class AllOperations<K, V> extends LinkedHashMap<K, V> {
+public class InsertUpdate<K, V> extends LinkedHashMap<K, V> {
     private final int maxSize;
     private K mostRecent;
 
-    public AllOperations(int maxSize) {
-        //The put, replace or get methods will move the respective
-        //element to the end of the list if the "accessOrder" param is defined equals true.
-
-        //Defining the "initialCapacity" as maxSize+2 and the "loadFactor" as 1f
-        //means the HashMap will never have its capacity increased.
-        super(maxSize+2, 1f, true);
+    public InsertUpdate(int maxSize) {
         this.maxSize = maxSize;
     }
 
-    /**
-     * @param eldest
-     * @return returns true if this map should remove its eldest entry.
-     */
     @Override
     protected boolean removeEldestEntry(Map.Entry<K, V> eldest) {
         return size() > maxSize;
@@ -57,6 +47,7 @@ public class AllOperations<K, V> extends LinkedHashMap<K, V> {
      */
     @Override
     public V put(K key, V value) {
+        super.remove(key);
         mostRecent = (K) key;
         return super.put(key, value);
     }
@@ -72,21 +63,10 @@ public class AllOperations<K, V> extends LinkedHashMap<K, V> {
     public V replace(K key, V value) {
         mostRecent =  super.containsKey(key)?key:mostRecent;
         if(mostRecent == key) {
-            return super.replace(key, value);
+            super.remove(key);
+            return super.put(key, value);
         }
         return null;
-    }
-
-    /**
-     * Reading a value from the cache also updates the mostRecent value.
-     *
-     * @param key - key
-     * @return the value associated with the key.
-     */
-    @Override
-    public V get(Object key) {
-        mostRecent = (K) key;
-        return super.get(key);
     }
 
     /**
@@ -94,7 +74,7 @@ public class AllOperations<K, V> extends LinkedHashMap<K, V> {
      *
      * @return the most recent value from the cache.
      * Remember that the most recent accessed
-     * element considers the operations: get, put or replace.
+     * element considers the operations: put or replace.
      */
     public V getMostRecent() {
         return super.get(mostRecent);
