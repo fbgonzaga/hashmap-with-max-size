@@ -35,7 +35,7 @@ p.s.: both classes have a method called *getMostRecent*() which returns the most
 
 ## Unit Testing ##
 
-You can find inside the project tests for both classes considering all allowed operations.
+You can find inside the project tests for both classes considering all of the allowed operations.
 
 ## Acknowledgments ##
 
