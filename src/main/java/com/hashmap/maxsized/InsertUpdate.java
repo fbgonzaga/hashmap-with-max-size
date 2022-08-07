@@ -30,6 +30,9 @@ public class InsertUpdate<K, V> extends LinkedHashMap<K, V> {
     private K mostRecent;
 
     public InsertUpdate(int maxSize) {
+        //Defining the "initialCapacity" as maxSize+2 and the "loadFactor" as 1f
+        //means the HashMap will never have its capacity increased.
+        super(maxSize+2, 1f);
         this.maxSize = maxSize;
     }
 

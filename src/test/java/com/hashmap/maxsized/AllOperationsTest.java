@@ -34,7 +34,7 @@ class AllOperationsTest {
 
     @Test
     public void testGetOperation() {
-        //After accessing the element, it must be moved to the last list position.
+        //After accessing the element, it must be moved to the last position.
         allOperations.get(3);
         assertEquals("[1, 2, 4, 5, 3]", keys.toString());
 
@@ -44,7 +44,7 @@ class AllOperationsTest {
 
     @Test
     public void testReplaceOperation() {
-        //After replacing the element, it must be moved to the last list position.
+        //After replacing the element, it must be moved to the last position.
         allOperations.replace(1, "one");
         assertEquals("[2, 3, 4, 5, 1]", keys.toString());
         assertEquals("one", allOperations.getMostRecent());

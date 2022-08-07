@@ -44,7 +44,7 @@ class InsertUpdateTest {
 
     @Test
     public void testReplaceOperation() {
-        //After replacing the element, it must be moved to the last list position.
+        //After replacing the element, it must be moved to the last position.
         insertUpdate.replace(1, "one");
         assertEquals("[2, 3, 4, 5, 1]", keys.toString());
         assertEquals("one", insertUpdate.getMostRecent());
