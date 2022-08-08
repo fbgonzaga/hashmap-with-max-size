@@ -1,4 +1,4 @@
-# hashmap-with-max-size
+# Cache based on a LinkedHashMap with a maximum size
 
 It is a small project showing how to limit a HashMap size.
 As an example, two classes were proposed to simulate a cache working (using a LinkedHashMap).
